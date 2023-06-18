@@ -18,9 +18,11 @@ class Sender
         $body = "";
 
         foreach ($wordsArray as $language => $word) {
-            $body .= "<h1 style='font-size: 24px; font-weight: bold;'>".$word["word"]."</h1></br><h2 style='font-size: 18px;'>".$language."</h2></br>";
+            $body .= "<div>
+            <h2 style='font-size: 24px; font-weight: bold; margin: 0 0 2px 0;' >".$word["word"]."</h2></br>
+            <h4 style='font-size: 18px; margin: 0 0 2px 0;'>".$language."</h4></br>";
             foreach ($word["definitions"] as $definition) {
-                $body .= "<h3 style='font-style: italic;'>".$definition."</h3></br>";
+                $body .= "<p style='font-style: italic; margin: 0 0 2px 0;'>".$definition."</p></br></div>";
             }
         }
 
