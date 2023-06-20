@@ -31,12 +31,11 @@ class WordController extends AbstractController
     }
 
     #[Route('/word', name: 'app_word')]
-    public function index(): JsonResponse
+    public function word(): JsonResponse
     {
         $en = 'en';
         $es = 'es';
-        $englishWordDefinition = [];
-        $spanishWordDefinition = [];
+
         do {
             $englishWord = str_replace(['[', ']', '"'], '', $this->wordGenerator->getWord($en));
             $spanishWord = str_replace(['[', ']', '"'], '', $this->wordGenerator->getWord($es));
@@ -78,7 +77,7 @@ class WordController extends AbstractController
             "spanish" => $spanishWordInfo
         ];
 
-        $this->sender->sendEmail($result);
+        //$this->sender->sendEmail($result);
         return $this->json($result);
     }
 }
