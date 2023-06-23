@@ -14,6 +14,7 @@ use App\WordGenerator\ApiWordGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class WordController extends AbstractController
@@ -31,7 +32,7 @@ class WordController extends AbstractController
     }
 
     #[Route('/word', name: 'app_word')]
-    public function word(): JsonResponse
+    public function word(): Response
     {
         $en = 'en';
         $es = 'es';
@@ -78,6 +79,6 @@ class WordController extends AbstractController
         ];
 
         //$this->sender->sendEmail($result);
-        return $this->json($result);
+        return new Response($result);
     }
 }
