@@ -32,7 +32,7 @@ class WordController extends AbstractController
     }
 
     #[Route('/word', name: 'app_word')]
-    public function word(): Response
+    public function word(): JsonResponse
     {
         $en = 'en';
         $es = 'es';
@@ -79,6 +79,6 @@ class WordController extends AbstractController
         ];
 
         //$this->sender->sendEmail($result);
-        return new Response($result);
+        return $this->json($result);
     }
 }
