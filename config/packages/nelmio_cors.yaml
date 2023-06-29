@@ -10,4 +10,4 @@ nelmio_cors:
         '^/':
             allow_origin: [ '*' ]
             allow_headers: [ '*' ]
-            allow_methods: [ 'GET' ]
+            allow_methods: [ '*' ]
