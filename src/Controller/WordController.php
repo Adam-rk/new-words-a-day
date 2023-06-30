@@ -83,7 +83,8 @@ class WordController extends AbstractController
     }
 
     #[Route('/getWord/{id}', name: 'app_get_word')]
-    public function getWord($id) {
+    public function getWord($id): JsonResponse
+    {
         $word = (array) $this->wordRepository->findOneBy(['id' => $id]);
 
         $cleanWord = $this->cleanArray->cleanWord($word);
