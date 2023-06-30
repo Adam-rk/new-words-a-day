@@ -81,4 +81,24 @@ class WordController extends AbstractController
         //$this->sender->sendEmail($result);
         return $this->json($result);
     }
+
+    #[Route('/getWord/{id}', name: 'app_get_word')]
+    public function getWord($id) {
+        $word = (array) $this->wordRepository->findOneBy(['id' => $id]);
+
+        $cleanWord = $this->cleanArray->cleanWord($word);
+
+        return $this->json($cleanWord);
+    }
+    #[Route('/getAllWords/{language}', name: 'app_get_all_words')]
+    public function getAllWords($language): JsonResponse {
+        $words = $this->wordRepository->findBy(['language' => $language]);
+
+        for ($i = 0; $i < count($words); $i++) {
+            $words[$i] = (array) $words[$i];
+        }
+        $cleanWords = $this->cleanArray->cleanWordsArray($words);
+
+        return $this->json($cleanWords);
+    }
 }
