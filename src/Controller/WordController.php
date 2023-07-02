@@ -22,17 +22,15 @@ class WordController extends AbstractController
     public function __construct(
         private readonly ApiWordGenerator $wordGenerator,
         private readonly WordRepository   $wordRepository,
-        private readonly ApiDefinitionGenerator $definitionGenerator,
         private readonly CleanArray $cleanArray,
         private readonly EnglishAndSpanishDictionary $englishAndSpanishDictionary,
         private readonly EntityManagerInterface $em,
-        private readonly Sender $sender
     )
     {
     }
 
     #[Route('/word', name: 'app_word')]
-    public function word(): Response
+    public function word(): JsonResponse
     {
         $en = 'en';
         $es = 'es';
@@ -79,6 +77,37 @@ class WordController extends AbstractController
         ];
 
         //$this->sender->sendEmail($result);
-        return new Response($result);
+        return $this->json($result);
+    }
+
+    #[Route('/getWord/{id}', name: 'app_get_word')]
+    public function getWord($id): JsonResponse
+    {
+        $word = (array) $this->wordRepository->findOneBy(['id' => $id]);
+
+        $cleanWord = $this->cleanArray->cleanWord($word);
+
+        return $this->json($cleanWord);
+    }
+    #[Route('/getAllWords/{language}', name: 'app_get_all_words')]
+    public function getAllWords($language): JsonResponse {
+        $words = $this->wordRepository->findBy(['language' => $language]);
+
+        for ($i = 0; $i < count($words); $i++) {
+            $words[$i] = (array) $words[$i];
+        }
+        $cleanWords = $this->cleanArray->cleanWordsArray($words);
+
+        return $this->json($cleanWords);
+    }
+
+    #[Route('getLastWordByLanguage/{language}', name: 'app_get_last_word_by_language')]
+    public function getLastWordByLanguage($language): JsonResponse
+    {
+        $word = $this->wordRepository->findLastRecordByLanguage($language);
+        $word = (array) $word[0];
+
+        $cleanWord = $this->cleanArray->cleanWord($word);
+        return $this->json($cleanWord);
     }
 }
