@@ -39,6 +39,18 @@ class WordRepository extends ServiceEntityRepository
         }
     }
 
+    public function findLastRecordByLanguage($language) {
+        $qb = $this->createQueryBuilder('w')
+            ->where('w.language = :language')
+            ->setParameter('language', $language)
+            ->orderBy('w.creationDate', 'DESC')
+            ->setMaxResults(1);
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
 //    /**
 //     * @return Word[] Returns an array of Word objects
 //     */

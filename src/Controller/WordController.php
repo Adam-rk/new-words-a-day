@@ -102,4 +102,14 @@ class WordController extends AbstractController
 
         return $this->json($cleanWords);
     }
+
+    #[Route('getLastWordByLanguage/{language}', name: 'app_get_last_word_by_language')]
+    public function getLastWordByLanguage($language): JsonResponse
+    {
+        $word = $this->wordRepository->findLastRecordByLanguage($language);
+        $word = (array) $word[0];
+
+        $cleanWord = $this->cleanArray->cleanWord($word);
+        return $this->json($cleanWord);
+    }
 }
