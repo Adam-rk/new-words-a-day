@@ -22,11 +22,9 @@ class WordController extends AbstractController
     public function __construct(
         private readonly ApiWordGenerator $wordGenerator,
         private readonly WordRepository   $wordRepository,
-        private readonly ApiDefinitionGenerator $definitionGenerator,
         private readonly CleanArray $cleanArray,
         private readonly EnglishAndSpanishDictionary $englishAndSpanishDictionary,
         private readonly EntityManagerInterface $em,
-        private readonly Sender $sender
     )
     {
     }
